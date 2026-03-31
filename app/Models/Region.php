@@ -11,4 +11,9 @@ class Region extends Model
     {
         return $this->hasMany(Supplier::class);
     }
+
+    public function kitchens()
+    {
+        return $this->hasMany(Kitchen::class);
+    }
 }

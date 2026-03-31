@@ -12,6 +12,13 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
+@if($date)
+    <div class="alert alert-info d-flex justify-content-between align-items-center">
+        <span>Showing RABs for <strong>{{ \Carbon\Carbon::parse($date)->format('d M Y') }}</strong></span>
+        <a href="{{ route('rabs.index') }}" class="btn btn-sm btn-outline-secondary">Clear filter</a>
+    </div>
+@endif
+
 <div class="card">
     <div class="card-body p-0">
         <table class="table table-bordered mb-0 align-middle">

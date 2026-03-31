@@ -16,17 +16,23 @@ class RabController extends Controller
         return (int) Region::where('is_active', true)->orderBy('id')->value('id');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $regionId = $this->currentRegionId();
+        $date = $request->input('date');
 
-        $rabs = Rab::with('menu')
+        $query = Rab::with('menu')
             ->where('region_id', $regionId)
             ->orderByDesc('rab_date')
-            ->orderBy('id')
-            ->paginate(20);
+            ->orderBy('id');
 
-        return view('rabs.index', compact('rabs'));
+        if ($date) {
+            $query->whereDate('rab_date', $date);
+        }
+
+        $rabs = $query->paginate(20)->withQueryString();
+
+        return view('rabs.index', compact('rabs', 'date'));
     }
 
     public function create()

@@ -13,6 +13,7 @@ class SupplierProduct extends Model
         'lead_time_days',
         'min_order_qty',
         'is_active',
+        'availability_status',
     ];
 
     public function supplier()
@@ -28,5 +29,10 @@ class SupplierProduct extends Model
     public function prices()
     {
         return $this->hasMany(SupplierProductPrice::class);
+    }
+
+    public function latestPrice()
+    {
+        return $this->hasOne(SupplierProductPrice::class)->latestOfMany('effective_from');
     }
 }

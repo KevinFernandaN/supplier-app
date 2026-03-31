@@ -37,6 +37,11 @@ use App\Http\Controllers\RabItemController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\SupplierPhotoController;
 use App\Http\Controllers\SupplierCertificationController;
+use App\Http\Controllers\ReceivingController;
+use App\Http\Controllers\KitchenController;
+use App\Http\Controllers\PurchaseRequestController;
+use App\Http\Controllers\PurchaseRequestItemController;
+use App\Http\Controllers\PurchaseRequestOrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,8 +66,20 @@ Route::resource('suppliers', SupplierController::class);
 Route::resource('suppliers.supplier-products', SupplierProductController::class);
 Route::resource('supplier-products.prices', SupplierProductPriceController::class);
 
+Route::get('/purchase-orders/suppliers-by-product', [PurchaseOrderController::class, 'suppliersByProduct'])
+    ->name('purchase-orders.suppliers-by-product');
 Route::resource('purchase-orders', PurchaseOrderController::class);
 Route::resource('purchase-orders.items', PurchaseOrderItemController::class);
+
+Route::post('purchase-orders/{purchaseOrder}/receiving', [ReceivingController::class, 'store'])
+    ->name('purchase-orders.receiving.store');
+Route::resource('receivings', ReceivingController::class)->only(['index', 'show', 'update']);
+Route::post('receivings/{receiving}/receive', [ReceivingController::class, 'receive'])
+    ->name('receivings.receive');
+Route::post('receiving-items/{receivingItem}/proof', [ReceivingController::class, 'uploadProof'])
+    ->name('receiving-items.proof.upload');
+Route::delete('receiving-items/{receivingItem}/proof', [ReceivingController::class, 'deleteProof'])
+    ->name('receiving-items.proof.delete');
 
 Route::resource('menus', MenuController::class);
 Route::resource('menus.recipes', MenuRecipeController::class)->only([
@@ -111,3 +128,20 @@ Route::resource('suppliers.photos', SupplierPhotoController::class)
 
 Route::resource('suppliers.certifications', SupplierCertificationController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+Route::resource('kitchens', KitchenController::class)
+    ->except(['show']);
+
+Route::resource('purchase-requests', PurchaseRequestController::class)
+    ->only(['index', 'create', 'store', 'show', 'destroy']);
+Route::post('purchase-requests/{purchaseRequest}/confirm', [PurchaseRequestController::class, 'confirm'])
+    ->name('purchase-requests.confirm');
+Route::post('purchase-requests/{purchaseRequest}/reopen', [PurchaseRequestController::class, 'reopen'])
+    ->name('purchase-requests.reopen');
+Route::patch('purchase-requests/{purchaseRequest}/items/{item}', [PurchaseRequestItemController::class, 'update'])
+    ->name('purchase-requests.items.update');
+
+Route::get('purchase-requests/{purchaseRequest}/orders/create', [PurchaseRequestOrderController::class, 'create'])
+    ->name('purchase-requests.orders.create');
+Route::post('purchase-requests/{purchaseRequest}/orders', [PurchaseRequestOrderController::class, 'store'])
+    ->name('purchase-requests.orders.store');

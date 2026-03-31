@@ -12,7 +12,7 @@ class SupplierProductController extends Controller
     public function index(Supplier $supplier)
     {
         $supplierProducts = $supplier->supplierProducts()
-            ->with('product')
+            ->with(['product', 'latestPrice'])
             ->orderBy('id', 'desc')
             ->get();
 
@@ -29,11 +29,18 @@ class SupplierProductController extends Controller
     public function store(Request $request, Supplier $supplier)
     {
         $validated = $request->validate([
-            'product_id' => ['required', 'exists:products,id'],
+            'product_id' => [
+                'required',
+                'exists:products,id',
+                \Illuminate\Validation\Rule::unique('supplier_products')->where('supplier_id', $supplier->id),
+            ],
             'specification_text' => ['nullable', 'string'],
             'lead_time_days' => ['nullable', 'integer', 'min:0'],
             'min_order_qty' => ['nullable', 'numeric'],
             'is_active' => ['nullable', 'boolean'],
+            'availability_status' => ['required', 'in:ready,limited,preorder'],
+        ], [
+            'product_id.unique' => 'This product has already been added to this supplier.',
         ]);
 
         $validated['supplier_id'] = $supplier->id;
@@ -68,6 +75,7 @@ class SupplierProductController extends Controller
             'lead_time_days' => ['nullable', 'integer', 'min:0'],
             'min_order_qty' => ['nullable', 'numeric'],
             'is_active' => ['nullable', 'boolean'],
+            'availability_status' => ['required', 'in:ready,limited,preorder'],
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);

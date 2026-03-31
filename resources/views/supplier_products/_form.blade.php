@@ -29,6 +29,15 @@
                value="{{ old('min_order_qty', $supplierProduct->min_order_qty ?? '') }}" placeholder="e.g. 10">
     </div>
 
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Availability</label>
+        <select name="availability_status" class="form-select">
+            <option value="ready"    @selected(old('availability_status', $supplierProduct->availability_status ?? 'ready') === 'ready')>Ready</option>
+            <option value="limited"  @selected(old('availability_status', $supplierProduct->availability_status ?? '') === 'limited')>Limited</option>
+            <option value="preorder" @selected(old('availability_status', $supplierProduct->availability_status ?? '') === 'preorder')>Pre-order</option>
+        </select>
+    </div>
+
     <div class="col-md-4 mb-3 d-flex align-items-end">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" name="is_active" value="1"

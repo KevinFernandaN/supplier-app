@@ -33,7 +33,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Operations</a>
                     <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('purchase-requests.index') }}">Purchase Requests</a></li>
                         <li><a class="dropdown-item" href="{{ route('purchase-orders.index') }}">Purchase Orders</a></li>
+                        <li><a class="dropdown-item" href="{{ route('receivings.index') }}">Receiving</a></li>
                         <li><a class="dropdown-item" href="{{ route('menus.index') }}">Menus</a></li>
                         <li><a class="dropdown-item" href="{{ route('sales-orders.index') }}">Sales Orders</a></li>
                         <li><a class="dropdown-item" href="{{ route('rabs.index') }}">RAB</a></li>
@@ -49,6 +51,7 @@
                         <li><a class="dropdown-item" href="{{ route('returns.index') }}">Return Orders</a></li>
                         <li><a class="dropdown-item" href="{{ route('unit-conversions.index') }}">Unit Conversions</a></li>
                         <li><a class="dropdown-item" href="{{ route('certifications.index') }}">Certifications</a></li>
+                        <li><a class="dropdown-item" href="{{ route('kitchens.index') }}">Kitchens</a></li>
                     </ul>
                 </li>
 
