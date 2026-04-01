@@ -9,14 +9,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->decimal('qty', 15, 3)->nullable()->after('complaint_type');
+            if (!Schema::hasColumn('complaints', 'qty')) {
+                $after = Schema::hasColumn('complaints', 'complaint_type') ? 'complaint_type' : 'type';
+                $table->decimal('qty', 15, 3)->nullable()->after($after);
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->dropColumn('qty');
+            if (Schema::hasColumn('complaints', 'qty')) {
+                $table->dropColumn('qty');
+            }
         });
     }
 };
