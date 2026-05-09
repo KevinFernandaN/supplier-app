@@ -49,6 +49,7 @@
                         <li><a class="dropdown-item" href="{{ route('products.index') }}">Products</a></li>
                         <li><a class="dropdown-item" href="{{ route('suppliers.index') }}">Suppliers</a></li>
                         <li><a class="dropdown-item" href="{{ route('returns.index') }}">Return Orders</a></li>
+                        <li><a class="dropdown-item" href="{{ route('units.index') }}">Units</a></li>
                         <li><a class="dropdown-item" href="{{ route('unit-conversions.index') }}">Unit Conversions</a></li>
                         <li><a class="dropdown-item" href="{{ route('certifications.index') }}">Certifications</a></li>
                         <li><a class="dropdown-item" href="{{ route('kitchens.index') }}">Kitchens</a></li>

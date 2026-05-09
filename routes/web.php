@@ -31,6 +31,7 @@ use App\Http\Controllers\SupplierReviewController;
 
 use App\Http\Controllers\ReturnOrderController;
 use App\Http\Controllers\ReturnItemController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitConversionsController;
 use App\Http\Controllers\RabController;
 use App\Http\Controllers\RabItemController;
@@ -110,6 +111,7 @@ Route::patch('/complaints/{complaint}/reopen', [ComplaintController::class, 'reo
 Route::resource('purchase-orders.reviews', SupplierReviewController::class)
     ->only(['create', 'store', 'show']);
 
+Route::resource('units', UnitController::class)->except(['show']);
 Route::resource('unit-conversions', UnitConversionsController::class);
 
 Route::resource('rabs', RabController::class);
