@@ -38,7 +38,8 @@
                         <li><a class="dropdown-item" href="{{ route('receivings.index') }}">Receiving</a></li>
                         <li><a class="dropdown-item" href="{{ route('menus.index') }}">Menus</a></li>
                         <li><a class="dropdown-item" href="{{ route('sales-orders.index') }}">Sales Orders</a></li>
-                        <li><a class="dropdown-item" href="{{ route('rabs.index') }}">RAB</a></li>
+                        <li><a class="dropdown-item" href="{{ route('rab-periods.index') }}">RAB Periods</a></li>
+                        <li><a class="dropdown-item" href="{{ route('rabs.index') }}">RAB (Legacy)</a></li>
                     </ul>
                 </li>
 
@@ -46,6 +47,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Master Data</a>
                     <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('regions.index') }}">Regions</a></li>
                         <li><a class="dropdown-item" href="{{ route('products.index') }}">Products</a></li>
                         <li><a class="dropdown-item" href="{{ route('suppliers.index') }}">Suppliers</a></li>
                         <li><a class="dropdown-item" href="{{ route('returns.index') }}">Return Orders</a></li>

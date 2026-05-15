@@ -13,7 +13,9 @@ class RabController extends Controller
 {
     private function currentRegionId(): int
     {
-        return (int) Region::where('is_active', true)->orderBy('id')->value('id');
+        $id = Region::where('is_active', true)->orderBy('id')->value('id')
+            ?? Region::orderBy('id')->value('id');
+        return (int) $id;
     }
 
     public function index(Request $request)

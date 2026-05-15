@@ -31,10 +31,15 @@ use App\Http\Controllers\SupplierReviewController;
 
 use App\Http\Controllers\ReturnOrderController;
 use App\Http\Controllers\ReturnItemController;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitConversionsController;
 use App\Http\Controllers\RabController;
 use App\Http\Controllers\RabItemController;
+use App\Http\Controllers\RabPeriodController;
+use App\Http\Controllers\RabDayController;
+use App\Http\Controllers\RabDayMenuController;
+use App\Http\Controllers\RabDayMenuItemController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\SupplierPhotoController;
 use App\Http\Controllers\SupplierCertificationController;
@@ -111,11 +116,24 @@ Route::patch('/complaints/{complaint}/reopen', [ComplaintController::class, 'reo
 Route::resource('purchase-orders.reviews', SupplierReviewController::class)
     ->only(['create', 'store', 'show']);
 
+Route::resource('regions', RegionController::class)->except(['show']);
 Route::resource('units', UnitController::class)->except(['show']);
 Route::resource('unit-conversions', UnitConversionsController::class);
 
 Route::resource('rabs', RabController::class);
 Route::resource('rabs.items', RabItemController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+Route::get('rab-periods/{rabPeriod}/export', [RabPeriodController::class, 'export'])
+    ->name('rab-periods.export');
+Route::get('rab-periods/{rabPeriod}/report', [RabPeriodController::class, 'report'])
+    ->name('rab-periods.report');
+Route::resource('rab-periods', RabPeriodController::class);
+Route::resource('rab-periods.days', RabDayController::class)
+    ->only(['create', 'store', 'show', 'edit', 'update', 'destroy']);
+Route::resource('rab-periods.days.menus', RabDayMenuController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy']);
+Route::resource('rab-periods.days.menus.items', RabDayMenuItemController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy']);
 
 Route::resource('returns', ReturnOrderController::class);
