@@ -2,23 +2,20 @@
 
 namespace Database\Seeders;
 
+use App\Models\Region;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class RegionSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('regions')->insert([
+        Region::firstOrCreate(
+            ['code' => 'JKT'],
             [
-                'code' => 'JKT',
                 'name' => 'Jakarta',
                 'timezone' => 'Asia/Jakarta',
                 'is_active' => true,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ]);
+            ]
+        );
     }
 }
