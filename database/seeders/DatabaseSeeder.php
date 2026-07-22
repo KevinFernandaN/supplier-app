@@ -18,6 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RegionSeeder::class,
             UnitSeeder::class,
+            UnitConversionSeeder::class,
+            ProductSeeder::class,
+            SupplierSeeder::class,
+            SupplierProductSeeder::class,
+            MenuSeeder::class,
+            MenuRecipeSeeder::class,
+            KitchenSeeder::class,
+            CertificationSeeder::class,
         ]);
     }
 }
