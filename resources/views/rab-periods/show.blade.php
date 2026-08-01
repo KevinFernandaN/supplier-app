@@ -31,6 +31,16 @@
     <div class="d-flex gap-2 flex-shrink-0">
         <a href="{{ route('rab-periods.days.create', $rabPeriod) }}" class="btn btn-success">+ Add Day</a>
         <a href="{{ route('rab-periods.report', $rabPeriod) }}" class="btn btn-outline-primary">View Report</a>
+        @if($rabPeriod->status !== 'draft')
+            @if($rabPeriod->isPastPrLockDate())
+                <button type="button" class="btn btn-outline-secondary" disabled
+                        title="Closed — H-1 lock date ({{ $rabPeriod->prLockDate()->format('d M Y') }}) has passed">
+                    Send to PR (Closed)
+                </button>
+            @else
+                <a href="{{ route('rab-periods.purchase-requests.create', $rabPeriod) }}" class="btn btn-outline-success">Send to Purchase Request</a>
+            @endif
+        @endif
         <div class="btn-group">
             <a href="{{ route('rab-periods.export', $rabPeriod) }}?format=xlsx" class="btn btn-success">Export Excel</a>
             <a href="{{ route('rab-periods.export', $rabPeriod) }}?format=csv" class="btn btn-outline-secondary">Export CSV</a>
@@ -149,6 +159,50 @@
         </table>
     </div>
 </div>
+
+@if($rabPeriod->purchaseRequests->isNotEmpty())
+<div class="card mt-4">
+    <div class="card-header fw-semibold">Purchase Requests Generated from this Period</div>
+    <div class="card-body p-0">
+        <table class="table table-sm table-bordered mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Kitchen</th>
+                    <th>Menu</th>
+                    <th class="text-end">Portions</th>
+                    <th>Status</th>
+                    <th class="text-center" width="100">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($rabPeriod->purchaseRequests as $pr)
+                    <tr>
+                        <td class="text-muted">{{ $pr->id }}</td>
+                        <td>{{ $pr->kitchen->name }}</td>
+                        <td>{{ $pr->menu->name ?? 'All Menus (Period)' }}</td>
+                        <td class="text-end">{{ number_format($pr->total_portion, 0) }}</td>
+                        <td>
+                            @php
+                                $prBadge = match($pr->status) {
+                                    'draft'     => 'secondary',
+                                    'confirmed' => 'primary',
+                                    'ordered'   => 'success',
+                                    default     => 'secondary',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $prBadge }}">{{ ucfirst($pr->status) }}</span>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ route('purchase-requests.show', $pr) }}" class="btn btn-sm btn-outline-secondary">View</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
 
 <div class="mt-3">
     <a href="{{ route('rab-periods.index') }}" class="btn btn-outline-secondary">&larr; Back to Periods</a>

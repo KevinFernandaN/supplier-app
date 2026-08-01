@@ -9,6 +9,7 @@ class PurchaseRequest extends Model
     protected $fillable = [
         'kitchen_id',
         'menu_id',
+        'rab_period_id',
         'total_portion',
         'status',
         'notes',
@@ -22,6 +23,11 @@ class PurchaseRequest extends Model
     public function menu()
     {
         return $this->belongsTo(Menu::class);
+    }
+
+    public function rabPeriod()
+    {
+        return $this->belongsTo(RabPeriod::class);
     }
 
     public function items()

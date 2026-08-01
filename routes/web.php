@@ -48,6 +48,7 @@ use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\PurchaseRequestItemController;
 use App\Http\Controllers\PurchaseRequestOrderController;
+use App\Http\Controllers\RabPeriodPurchaseRequestController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -135,6 +136,11 @@ Route::resource('rab-periods.days.menus', RabDayMenuController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy']);
 Route::resource('rab-periods.days.menus.items', RabDayMenuItemController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+Route::get('rab-periods/{rabPeriod}/purchase-requests/create', [RabPeriodPurchaseRequestController::class, 'create'])
+    ->name('rab-periods.purchase-requests.create');
+Route::post('rab-periods/{rabPeriod}/purchase-requests', [RabPeriodPurchaseRequestController::class, 'store'])
+    ->name('rab-periods.purchase-requests.store');
 
 Route::resource('returns', ReturnOrderController::class);
 

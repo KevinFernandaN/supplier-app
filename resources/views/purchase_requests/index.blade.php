@@ -17,8 +17,8 @@
                     <th>#</th>
                     <th>Kitchen</th>
                     <th>Menu</th>
-                    <th class="text-end">Portions</th>
                     <th>Status</th>
+                    <th>RAB Period Dates</th>
                     <th>Created</th>
                     <th class="text-end" style="width: 120px;">Actions</th>
                 </tr>
@@ -28,8 +28,7 @@
                     <tr>
                         <td class="text-muted">{{ $pr->id }}</td>
                         <td class="fw-semibold">{{ $pr->kitchen->name }}</td>
-                        <td>{{ $pr->menu->name }}</td>
-                        <td class="text-end">{{ number_format($pr->total_portion, 0) }}</td>
+                        <td>{{ $pr->menu->name ?? 'All Menus (Period)' }}</td>
                         <td>
                             @if ($pr->status === 'draft')
                                 <span class="badge bg-secondary">Draft</span>
@@ -37,6 +36,13 @@
                                 <span class="badge bg-primary">Confirmed</span>
                             @else
                                 <span class="badge bg-success">Ordered</span>
+                            @endif
+                        </td>
+                        <td class="small">
+                            @if ($pr->rabPeriod)
+                                {{ $pr->rabPeriod->start_date->format('d M') }} &ndash; {{ $pr->rabPeriod->end_date->format('d M Y') }}
+                            @else
+                                <span class="text-muted">&mdash;</span>
                             @endif
                         </td>
                         <td>{{ $pr->created_at->format('d M Y') }}</td>

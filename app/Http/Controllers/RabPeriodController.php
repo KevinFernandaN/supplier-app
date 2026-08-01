@@ -65,7 +65,7 @@ class RabPeriodController extends Controller
             $q->with(['menus' => function ($q) {
                 $q->with(['items', 'replacements']);
             }]);
-        }]);
+        }, 'purchaseRequests.kitchen', 'purchaseRequests.menu']);
 
         $dayStats = $rabPeriod->days->map(function ($day) use ($rabPeriod) {
             $day->setRelation('period', $rabPeriod);

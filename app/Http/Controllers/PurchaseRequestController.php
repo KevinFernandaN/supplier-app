@@ -12,7 +12,7 @@ class PurchaseRequestController extends Controller
 {
     public function index()
     {
-        $prs = PurchaseRequest::with(['kitchen', 'menu'])
+        $prs = PurchaseRequest::with(['kitchen', 'menu', 'rabPeriod'])
             ->latest()
             ->paginate(15);
 
@@ -61,7 +61,7 @@ class PurchaseRequestController extends Controller
 
     public function show(PurchaseRequest $purchaseRequest)
     {
-        $purchaseRequest->load(['kitchen', 'menu', 'items.product', 'items.unit']);
+        $purchaseRequest->load(['kitchen', 'menu', 'rabPeriod', 'items.product', 'items.unit']);
 
         return view('purchase_requests.show', compact('purchaseRequest'));
     }

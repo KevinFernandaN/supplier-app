@@ -26,6 +26,23 @@ class RabPeriod extends Model
         return $this->hasMany(RabDay::class)->orderBy('day_date');
     }
 
+    public function purchaseRequests()
+    {
+        return $this->hasMany(PurchaseRequest::class);
+    }
+
+    // H-1 lock date = the day before cooking starts (start_date).
+    // Matches the RAB PK/PB workflow: confirmed H-1, locked from start_date onward.
+    public function prLockDate()
+    {
+        return $this->start_date->copy()->subDay()->startOfDay();
+    }
+
+    public function isPastPrLockDate(): bool
+    {
+        return now()->startOfDay()->gte($this->prLockDate());
+    }
+
     // Budget for the period = sum of each day's budget
     public function totalBudget(): float
     {

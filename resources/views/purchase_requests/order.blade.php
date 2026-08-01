@@ -8,8 +8,7 @@
     <div>
         <h1 class="h3 mb-0">Create Orders — PR #{{ $purchaseRequest->id }}</h1>
         <small class="text-muted">
-            {{ $purchaseRequest->kitchen->name }} &mdash; {{ $purchaseRequest->menu->name }} &mdash;
-            {{ number_format($purchaseRequest->total_portion, 0) }} portions
+            {{ $purchaseRequest->kitchen->name }} &mdash; {{ $purchaseRequest->menu->name ?? 'All Menus (Period)' }}
             @if ($isAssisted)
                 &mdash; <span class="badge bg-info text-dark">Assisted: vendors pre-selected</span>
             @else
